@@ -15,6 +15,7 @@ namespace RSA
         public Form1()
         {
             InitializeComponent();
+            Console.WriteLine("Inittial commit");
         }
     }
 }

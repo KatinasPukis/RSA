@@ -1,0 +1,10 @@
+C:\Users\domin\source\repos\RSA\RSA\bin\Debug\RSA.exe.config
+C:\Users\domin\source\repos\RSA\RSA\bin\Debug\RSA.exe
+C:\Users\domin\source\repos\RSA\RSA\bin\Debug\RSA.pdb
+C:\Users\domin\source\repos\RSA\RSA\obj\Debug\RSA.csprojAssemblyReference.cache
+C:\Users\domin\source\repos\RSA\RSA\obj\Debug\RSA.Form1.resources
+C:\Users\domin\source\repos\RSA\RSA\obj\Debug\RSA.Properties.Resources.resources
+C:\Users\domin\source\repos\RSA\RSA\obj\Debug\RSA.csproj.GenerateResource.cache
+C:\Users\domin\source\repos\RSA\RSA\obj\Debug\RSA.csproj.CoreCompileInputs.cache
+C:\Users\domin\source\repos\RSA\RSA\obj\Debug\RSA.exe
+C:\Users\domin\source\repos\RSA\RSA\obj\Debug\RSA.pdb
