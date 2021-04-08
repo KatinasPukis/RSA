@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Numerics;
 
 namespace RSA
 {
@@ -66,6 +67,10 @@ namespace RSA
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (checkBox2.Checked)
+            {
+                Decryption();
+            }
             string text = richTextBox1.Text;
             int exponent = 0;
             int p = int.Parse(TextboxP.Text);
@@ -88,12 +93,14 @@ namespace RSA
                 }
             }
             Console.WriteLine("Public key="+" "+ "e="+" "+exponent+" "+ "n="+" "+n);
-            string publicKey = exponent + " " + n;
+            string publicKey = exponent + "\n" + n;
             File.WriteAllText(@"C:\Users\domin\source\repos\RSA\RSA\publickey.txt", publicKey);
+
             if (checkBox1.Checked)
             {
                 Encryption(text,exponent,n);
             }
+            
         }
         public int PrivateKey(int fn, int exponent)
         {
@@ -123,12 +130,47 @@ namespace RSA
             File.WriteAllText(@"C:\Users\domin\source\repos\RSA\RSA\encryptedText.txt", encryptedText);
 
         }
-        public void Decryption(string text, int exponent, int n, int fn)
+        public void Decryption()
         {
-           
-            int d = PrivateKey(fn, exponent);
+            string text = richTextBox1.Text;
+            string line;
+            List<string> allLinesText = File.ReadAllLines(@"C:\Users\domin\source\repos\RSA\RSA\publickey.txt").ToList();
+            int n = Int32.Parse(allLinesText[1]);
+            int p = 2;
+            int q = 0;
+            while(n % p > 0)
+            {
+                p++;
+            }
+            q = n / p;
+            TextboxP.Text = q.ToString();
+            TextBoxQ.Text = p.ToString();
+            int fn = (p - 1) * (q - 1);
+            int d = PrivateKey(fn, Int32.Parse(allLinesText[0]));
             List<int> EncryptedNumber = TexttoASCII(text);
+            List<BigInteger> decryptedNumber = new List<BigInteger>();
+            string decryptedText = "";
+            for (int i = 0; i < text.Length; i++)
+            {
 
+                BigInteger bigInteger = BigInteger.Pow(EncryptedNumber[i], d);
+                BigInteger finalnumber = bigInteger % n;
+                decryptedNumber.Add(finalnumber);
+                decryptedText += (char)(finalnumber);
+
+
+            }
+            richTextBox1.Text = decryptedText;
+
+
+
+
+        }
+
+        private void readTextButon_Click(object sender, EventArgs e)
+        {
+            string readText = File.ReadAllText(@"C:\Users\domin\source\repos\RSA\RSA\encryptedText.txt");
+            richTextBox1.Text = readText;
         }
     }
 }
