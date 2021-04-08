@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,9 +53,20 @@ namespace RSA
             return a;
 
         }
+        static List<int> TexttoASCII(string text)
+        {
+            List<int> number = new List<int>();
+            foreach (char words in text)
+            {
+                number.Add(words);
+            }
+            return number;
+
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string text = richTextBox1.Text;
             int exponent = 0;
             int p = int.Parse(TextboxP.Text);
             int q = int.Parse(TextBoxQ.Text);
@@ -76,8 +88,47 @@ namespace RSA
                 }
             }
             Console.WriteLine("Public key="+" "+ "e="+" "+exponent+" "+ "n="+" "+n);
+            string publicKey = exponent + " " + n;
+            File.WriteAllText(@"C:\Users\domin\source\repos\RSA\RSA\publickey.txt", publicKey);
+            if (checkBox1.Checked)
+            {
+                Encryption(text,exponent,n);
+            }
+        }
+        public int PrivateKey(int fn, int exponent)
+        {
+            int d = 2;
+            while (d* exponent %fn !=1)
+            {
+                d++;
+            }
+            return d;
+        }
+        private void Encryption(string text, int exponent, int n)
+        {
+            List<int> textNumber = TexttoASCII(text);
+            List<double> encryptedNumber= new List<double>();
+            string encryptedText = "";
+            for (int i = 0; i < text.Length; i++)
+            {
+                double number = Math.Pow(textNumber[i], exponent);
+                double finalnumber = number % n;
+                encryptedNumber.Add(finalnumber);
+                encryptedText += (char)(finalnumber);
+
+
+            }
+
+            richTextBox1.Text = encryptedText;
+            File.WriteAllText(@"C:\Users\domin\source\repos\RSA\RSA\encryptedText.txt", encryptedText);
 
         }
+        public void Decryption(string text, int exponent, int n, int fn)
+        {
+           
+            int d = PrivateKey(fn, exponent);
+            List<int> EncryptedNumber = TexttoASCII(text);
 
+        }
     }
 }
